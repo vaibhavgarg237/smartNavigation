@@ -51,15 +51,15 @@ const movePointerRound = ({
     //Handle mouse events
     document.addEventListener("mousemove", (event) => {
     //   pointerStyle.transition = transition;
-      pointerStyle.transform = "scale(1)";
+      // pointerStyle.transform = "scale(1)";
       pointerStyle.left = `${event.pageX - leftOffset}px`;
       pointerStyle.top = `${event.pageY - topOffset}px`;
     });
 
-    document.addEventListener("mouseleave", () => {
+    // document.addEventListener("mouseleave", () => {
     //   pointerStyle.transition = transition;
-      pointerStyle.transform = "scale(0)";
-    });
+      // pointerStyle.transform = "scale(0)";
+    // });
   }
 };
 
