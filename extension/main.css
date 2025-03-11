@@ -1,0 +1,17 @@
+body{
+ cursor: none;
+}
+
+#mouse-pointer {
+  background-color: white;
+  width: 80px;
+  height: 80px;
+  mix-blend-mode: difference;
+  z-index: 100;
+  border-radius: 9998px;
+  position: absolute;
+  pointer-events: none;
+  mask-image: radial-gradient(white 0%, transparent);
+  transition: width 0.2s ease-in-out, height 0.2s ease-in-out;
+  background-color: yellow;
+}
