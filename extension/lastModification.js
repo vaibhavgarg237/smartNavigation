@@ -60,19 +60,22 @@ const isItRegion2 = (cursorX, cursorY, currCursorSide, objList) => {
 
     const rx1 = objList[1].getBoundingClientRect().x + objList[1].getBoundingClientRect().width; //small box
     const ry1 = objList[0].getBoundingClientRect().y; //big box
-    const rx2 = objList[0].right;
-    const ry2 = objList[0].bottom;
+    const rx2 = objList[0].getBoundingClientRect().right;
+    const ry2 = objList[0].getBoundingClientRect().bottom;
 
     const overlappedX1 = Math.max(rx1, cursorX1);
     const overlappedY1 = Math.max(ry1, cursorY1);
     const overlappedX2 = Math.min(rx2, cursorX2);
     const overlappedY2 = Math.min(ry2, cursorY2);
 
+  // console.log({cursorX1, cursorY1, cursorX2, cursorY2}, {rx1, ry1, rx2, ry2}, {overlappedX1, overlappedY1, overlappedX2, overlappedY2},objList)
+
     if (overlappedX2 - overlappedX1 > 0 && overlappedY2 - overlappedY1 > 0) {
+      // console.log("overlapped")
         const currOverlappedArea = (overlappedX2 - overlappedX1) * (overlappedY2 - overlappedY1);
         if (currOverlappedArea > 0.75 * currCursorSide * currCursorSide) {
         // console.log("found region",currOverlappedArea, currCursorSide * currCursorSide, singularObjElement.className);
-        return true;
+          return true;
         }
         return false;
     }
@@ -117,7 +120,7 @@ window.onload = function () {
 
     document.addEventListener("mousemove", (event) => {
 
-      region2 = isItRegion2(cursorX, cursorY, currCursorSide,[document.getElementsByClassName("ytVirtualListContainer")[0],document.getElementsByTagName("ytlr-guide-response")[0],]);
+      region2 = isItRegion2(cursorX, cursorY, currCursorSide,[document.getElementsByClassName("ytVirtualListContainer")[0],document.getElementsByTagName("ytlr-guide-response")[0]]);
       // console.log(region2)
 
       if (!MANUAL_MODE_ENABLED) {
@@ -128,7 +131,9 @@ window.onload = function () {
 
       const dx = event.movementX;
       const dy = event.movementY;
-      let speedConstant = (SENSITIVITY * currCursorSide) / MIN_CURSOR_SIDE;
+      let speedConstant = (SENSITIVITY * currCursorSide) / MIN_CURSOR_SIDE; //region2: 4.5,region1: 1
+      if(region2) speedConstant = 2;
+      else speedConstant = 1; 
       cursorX += dx * speedConstant;
       cursorY += dy * speedConstant;
 
